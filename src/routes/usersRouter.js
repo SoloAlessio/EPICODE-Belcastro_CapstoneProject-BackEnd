@@ -9,6 +9,9 @@ const usersRoute = express.Router()
 
 // Handling login route
 usersRoute
+    .get("/test", (req, res) => {
+        res.send("Hello world")
+    })
     .post("/login", async (req, res) => {
         const { email, password } = req.body
         const user = await User.findOne({ email })
