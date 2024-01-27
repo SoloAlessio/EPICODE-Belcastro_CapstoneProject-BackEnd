@@ -3,14 +3,18 @@ import express from "express"
 import User from "../models/Users.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import authControl from "../middleware/authControl.js"
 
 // Creating an instance of express router
 const usersRoute = express.Router()
 
 // Handling login route
 usersRoute
-    .get("/test", (req, res) => {
-        res.send("Hello world")
+    .get("/me", authControl, async (req, res) => {
+        const user = await User.findOne({ email: req.user.email }).select(
+            "-password"
+        )
+        res.status(200).json(user)
     })
     .post("/login", async (req, res) => {
         const { email, password } = req.body
