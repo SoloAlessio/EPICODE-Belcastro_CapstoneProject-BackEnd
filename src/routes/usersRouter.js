@@ -16,6 +16,21 @@ usersRoute
         )
         res.status(200).json(user)
     })
+    .put("/me", authControl, async (req, res) => {
+        const id = req.user._id
+        const { email, name } = req.body
+
+        try {
+            const updatedUser = await User.findByIdAndUpdate(
+                id,
+                { email, name },
+                { new: true }
+            )
+            res.status(200).json(updatedUser)
+        } catch (error) {
+            res.status(500).send("Failed to update user")
+        }
+    })
     .post("/login", async (req, res) => {
         const { email, password } = req.body
         const user = await User.findOne({ email })
