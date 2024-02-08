@@ -18,12 +18,12 @@ usersRoute
     })
     .put("/me", authControl, async (req, res) => {
         const id = req.user._id
-        const { email, name } = req.body
+        const { email, name, surname } = req.body
 
         try {
             const updatedUser = await User.findByIdAndUpdate(
                 id,
-                { email, name },
+                { email, name, surname },
                 { new: true }
             )
             res.status(200).json(updatedUser)
