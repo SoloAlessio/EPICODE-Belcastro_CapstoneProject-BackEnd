@@ -8,14 +8,17 @@ import authControl from "../middleware/authControl.js"
 // Creating an instance of express router
 const usersRoute = express.Router()
 
-// Handling login route
 usersRoute
+
+    // Handling get route
     .get("/me", authControl, async (req, res) => {
         const user = await User.findOne({ email: req.user.email }).select(
             "-password"
         )
         res.status(200).json(user)
     })
+
+    // Handling update route
     .put("/me", authControl, async (req, res) => {
         const id = req.user._id
         const { email, name, surname } = req.body
@@ -31,6 +34,19 @@ usersRoute
             res.status(500).send("Failed to update user")
         }
     })
+
+    // Handling delete route
+    .delete("/me", authControl, async (req, res) => {
+        const id = req.user._id
+        try {
+            await User.findByIdAndDelete(id)
+            res.status(204).send("User deleted")
+        } catch (error) {
+            res.status(500).send("Failed to delete user")
+        }
+    })
+
+    // Handling login route
     .post("/login", async (req, res) => {
         const { email, password } = req.body
         const user = await User.findOne({ email })
