@@ -109,7 +109,7 @@ usersRoute
         }),
         async (req, res) => {
             const payload = {
-                id: req.user._id,
+                userId: req.user._id,
                 name: req.user.name,
                 surname: req.user.surname,
                 email: req.user.email,
