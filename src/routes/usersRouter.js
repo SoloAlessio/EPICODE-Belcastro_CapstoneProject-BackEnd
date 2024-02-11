@@ -4,6 +4,7 @@ import User from "../models/Users.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import authControl from "../middleware/authControl.js"
+import passport from "passport"
 
 // Creating an instance of express router
 const usersRoute = express.Router()
