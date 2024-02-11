@@ -116,7 +116,9 @@ usersRoute
             }
             const token = jwt.sign(payload, process.env.JWT_SECRET)
 
-            res.redirect(`${process.env.SITE_URL}/callbackPage?token=${token}`)
+            res.redirect(
+                `${process.env.SITE_URL}/account/callbackPage?token=${token}`
+            )
         }
     )
 
