@@ -1,9 +1,11 @@
-import express from "express"
-import list from "express-list-endpoints"
 import mongoose from "mongoose"
-import usersRoute from "./routes/usersRouter.js"
+import express from "express"
 import { config } from "dotenv"
+import list from "express-list-endpoints"
 import cors from "cors"
+import usersRoute from "./routes/usersRouter.js"
+import passport from "passport"
+import googleStrategy from "./middleware/oauth/google.js"
 config()
 
 const server = express()
@@ -11,6 +13,7 @@ const port = process.env.PORT || 3030
 
 server.use(cors())
 server.use(express.json())
+passport.use(googleStrategy)
 
 server.use("/users", usersRoute)
 
